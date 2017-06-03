@@ -1,0 +1,7 @@
+{
+  "name": "release-videos",
+  "version": "1.0.0",
+  "main": "release-videos.js",
+  "repository": "https://github.com/lomiarz/release-videos.git",
+  "license": "MIT"
+}
