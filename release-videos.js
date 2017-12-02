@@ -32,7 +32,7 @@
 
     function player() {
         var splittedUrl = document.location.href.split(/[.,]/);
-        var identifier = splittedUrl[splittedUrl.length - 2];
+        var identifier = splittedUrl[splittedUrl.length - 1];
         var url = '/api/?platform=ConnectedTV&terminal=Panasonic&format=json&authKey=064fda5ab26dc1dd936f5c6e84b7d3c2&v=3.1&m=getItem&id=';
         var obj = getRemoteObject(url + identifier);
 
