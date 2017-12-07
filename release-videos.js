@@ -1,7 +1,7 @@
 (function() {
 
     var quality = {
-        ipla: '384p',
+        ipla: '576p',
         player: 'Standard',
         tvp: '820000',
         vod: '360'
@@ -12,21 +12,19 @@
         f.open('GET', url, false);
         f.send();
         return JSON.parse(f.responseText);
-    };
+    }
 
     function ipla() {
         var regexp = /ipla:\/\/playvod-1\|([A-Fa-f0-9]+)/;
         var match =  document.body.innerHTML.match(regexp);
         try {
             var videoId = match[1];
-            var url = 'http://getmedia.redefine.pl/vods/get_vod/?cpid=1&ua=mipla/23&media_id=' + videoId;
+            var url = 'https://getmedia.redefine.pl/vods/get_vod/?cpid=1&ua=mipla/23&media_id=' + videoId;
             var object = getRemoteObject(url);
-            console.log(object.vod.copies);
-            var copy = object.vod.copies.find(function(copy) { return copy.quality_p == quality.ipla } );
-            console.log(JSON.stringify(copy));
+            var copy = object.vod.copies.find(function(copy) { return copy.quality_p === quality.ipla } );
             document.location.href = copy.url;
         } catch (e) {
-            console.error("Can't find movie identifier :( => " + e);
+            console.error('Can\'t find movie identifier :( => ' + e);
         }
     }
 
@@ -37,11 +35,11 @@
         var obj = getRemoteObject(url + identifier);
 
         try {
-            var h = obj.item.videos.main.video_content[1].url
+            var h = obj.item.videos.main.video_content[0].url;
             console.log("Player done");
         } catch (e) {
             console.error("Can't find movie identifier :(");
-        };
+        }
         document.location.href = h;
     }
 
@@ -73,7 +71,9 @@
 
         if (identifier) {
             var response = getRemoteObject('https://www.tvp.pl/shared/cdn/tokenizer_v2.php?object_id=' + identifier);
-            var url = response.formats.find(function(format) { return (format.totalBitrate = quality.tvp && format.adaptive == false) }).url;
+            var url = response.formats.find(function(format) {
+                return (format.totalBitrate === quality.tvp && format.adaptive === false) }
+                ).url;
             document.location.href = url;
         } else {
             console.error("Can't find movie identifier :(");
