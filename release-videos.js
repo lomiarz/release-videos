@@ -3,7 +3,7 @@
     var quality = {
         ipla: '576p',
         player: 'Standard',
-        tvp: '820000',
+        tvp: '1250000',
         vod: '360'
     };
 
@@ -71,8 +71,11 @@
 
         if (identifier) {
             var response = getRemoteObject('https://www.tvp.pl/shared/cdn/tokenizer_v2.php?object_id=' + identifier);
-            var url = response.formats.find(function(format) {
-                return (format.totalBitrate === quality.tvp && format.adaptive === false) }
+            console.log(response.formats.find);
+            var formats = response.formats
+            var url = formats.find(function(format) {
+                console.log(format);
+                return (format.totalBitrate == quality.tvp && format.adaptive === false) }
                 ).url;
             document.location.href = url;
         } else {
